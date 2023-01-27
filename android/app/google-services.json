@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "176742698671",
+    "firebase_url": "https://homeeasy-90607-default-rtdb.firebaseio.com",
+    "project_id": "homeeasy-90607",
+    "storage_bucket": "homeeasy-90607.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:176742698671:android:4fbc5b6efff8b3a19f8e5a",
+        "android_client_info": {
+          "package_name": "com.example.homeeasy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "176742698671-fc11u7mhulev9p3qbb6foettbhe0qol8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_OUcu-vmWpWR3zMRSajgxkvoWlcp1lvs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "176742698671-fc11u7mhulev9p3qbb6foettbhe0qol8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "176742698671-66jddalhmorh95kmb3itmoh4mkvqjimi.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.homeeasy"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
