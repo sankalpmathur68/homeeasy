@@ -67,7 +67,7 @@ class _AddState extends State<Add> {
                   firstChild: placeList(
                     hid: widget.hid,
                   ),
-                  secondChild: formForNew(),
+                  secondChild: formForNew(hid: widget.hid),
                   crossFadeState: !Addnew
                       ? CrossFadeState.showFirst
                       : CrossFadeState.showSecond,
@@ -82,8 +82,8 @@ class _AddState extends State<Add> {
 }
 
 class formForNew extends StatefulWidget {
-  const formForNew({super.key});
-
+  const formForNew({required this.hid});
+  final hid;
   @override
   State<formForNew> createState() => formForNewState();
 }
@@ -135,6 +135,10 @@ class formForNewState extends State<formForNew> {
                         fillColor: Colors.black,
                         border: InputBorder.none),
                   ),
+                  Text(
+                    "*place should contain atleast one Object.",
+                    style: TextStyle(color: Colors.white),
+                  ),
                   SizedBox(
                     child: Container(
                       height: 5,
@@ -145,8 +149,10 @@ class formForNewState extends State<formForNew> {
                     padding: EdgeInsets.all(10),
                     child: ElevatedButton(
                         onPressed: () {
-                          print(_placeHandler.text);
-                          print(_objectHandler.text);
+                          ref
+                              .child(
+                                  'homes/${widget.hid}/places/${_placeHandler.text}/${_objectHandler.text}')
+                              .set("${DateTime.now()}");
                         },
                         style: ElevatedButton.styleFrom(
                             elevation: 25, shadowColor: Colors.black),

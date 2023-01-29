@@ -52,6 +52,9 @@ class _HomeState extends State<Home> {
     final currentwidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
+        systemOverlayStyle:
+            SystemUiOverlayStyle(statusBarColor: Colors.black38),
+        elevation: 0,
         title: isSearching
             ? TextField(
                 cursorColor: Colors.white,
@@ -95,15 +98,18 @@ class _HomeState extends State<Home> {
           )
         ],
       ),
-      body: Container(
-        child: Center(
-            child: Column(
-          children: [
-            placeList(
-              hid: widget.homeid,
-            )
-          ],
-        )),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Container(
+          child: Center(
+              child: Column(
+            children: [
+              placeList(
+                hid: widget.homeid,
+              )
+            ],
+          )),
+        ),
       ),
     );
   }

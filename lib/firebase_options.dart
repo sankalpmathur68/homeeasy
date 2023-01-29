@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyC5AzxqHgen7Eg7YcckiSr1brOABvfjcEU',
-    appId: '1:176742698671:web:0244fa20f1d6f2059f8e5a',
+    appId: '1:176742698671:web:b2e7bf82b8604a919f8e5a',
     messagingSenderId: '176742698671',
     projectId: 'homeeasy-90607',
     authDomain: 'homeeasy-90607.firebaseapp.com',
@@ -61,7 +61,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyD_OUcu-vmWpWR3zMRSajgxkvoWlcp1lvs',
-    appId: '1:176742698671:android:4fbc5b6efff8b3a19f8e5a',
+    appId: '1:176742698671:android:81e2a9af850779719f8e5a',
     messagingSenderId: '176742698671',
     projectId: 'homeeasy-90607',
     databaseURL: 'https://homeeasy-90607-default-rtdb.firebaseio.com',

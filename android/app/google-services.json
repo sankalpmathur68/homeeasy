@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:176742698671:android:4fbc5b6efff8b3a19f8e5a",
+        "mobilesdk_app_id": "1:176742698671:android:81e2a9af850779719f8e5a",
         "android_client_info": {
-          "package_name": "com.example.homeeasy"
+          "package_name": "com.kesari.homeeasy"
         }
       },
       "oauth_client": [

@@ -37,66 +37,115 @@ class _loginState extends State<login> {
                 )),
             body: Padding(
               padding: const EdgeInsets.all(70.0),
-              child: Container(
-                child: Center(
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Login Or Sign up",
-                          style: TextStyle(
-                              fontSize: currentwidth / 20,
-                              fontWeight: FontWeight.w300),
-                        ),
-                        SizedBox(
-                          height: currentHeight / 20,
-                        ),
-                        TextField(
-                          controller: _mailController,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: currentwidth / 25),
-                          decoration: InputDecoration(
-                            hintText: "Email",
-                          ),
-                        ),
-                        SizedBox(
-                          height: currentHeight / 40,
-                        ),
-                        TextField(
-                          controller: _passwordController,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: currentwidth / 25),
-                          decoration: InputDecoration(
-                            hintText: "Password",
-                          ),
-                        ),
-                        SizedBox(
-                          height: currentHeight / 40,
-                        ),
-                        ElevatedButton(
-                            onPressed: () {
-                              if (_passwordController.text != "" &&
-                                  _mailController.text != "") {
-                                LoginActions().checkAccount(
-                                    '${_mailController.text}',
-                                    '${_passwordController.text}',
-                                    context);
-                              } else {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      content: Text("Fill Above information"),
+              child: Center(
+                child: SingleChildScrollView(
+                  child: Container(
+                    child: Center(
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Login Or Sign up",
+                              style: TextStyle(
+                                  fontSize: currentwidth / 20,
+                                  fontWeight: FontWeight.w300),
+                            ),
+                            SizedBox(
+                              height: currentHeight / 20,
+                            ),
+                            TextField(
+                              controller: _mailController,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: currentwidth / 25),
+                              decoration: InputDecoration(
+                                hintText: "Email",
+                              ),
+                            ),
+                            SizedBox(
+                              height: currentHeight / 40,
+                            ),
+                            TextField(
+                              controller: _passwordController,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: currentwidth / 25),
+                              decoration: InputDecoration(
+                                hintText: "Password",
+                              ),
+                            ),
+                            SizedBox(
+                              height: currentHeight / 40,
+                            ),
+                            ElevatedButton(
+                                onPressed: () {
+                                  if (_passwordController.text != "" &&
+                                      _mailController.text != "") {
+                                    LoginActions().checkAccount(
+                                        '${_mailController.text}',
+                                        '${_passwordController.text}',
+                                        context);
+                                  } else {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          content:
+                                              Text("Fill Above information"),
+                                        );
+                                      },
                                     );
-                                  },
-                                );
-                              }
-                            },
-                            child:
-                                event.connectionState == ConnectionState.waiting
-                                    ? CircularProgressIndicator()
-                                    : Text("Next"))
-                      ]),
+                                  }
+                                },
+                                child: event.connectionState ==
+                                        ConnectionState.waiting
+                                    ? Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: CircularProgressIndicator(
+                                          color: Colors.white,
+                                        ),
+                                      )
+                                    : Text("Next")),
+                            SizedBox(
+                              height: currentHeight / 40,
+                            ),
+                            ElevatedButton(
+                                onPressed: () {
+                                  TextEditingController emailHandler =
+                                      TextEditingController();
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        actions: [
+                                          ElevatedButton(
+                                              onPressed: () {
+                                                FirebaseAuth.instance
+                                                    .sendPasswordResetEmail(
+                                                        email:
+                                                            "${emailHandler.text}");
+                                                Navigator.pop(context);
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return AlertDialog(
+                                                          content: Text(
+                                                              "link has been sent to your email for password reset"));
+                                                    });
+                                              },
+                                              child: Text("Change"))
+                                        ],
+                                        content: TextFormField(
+                                          decoration: InputDecoration(
+                                              hintText:
+                                                  "Enter your Email Address."),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                                child: Text("Forgot Password ?"))
+                          ]),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -122,21 +171,32 @@ class LoginActions {
     }
     if (mailids.contains(id)) {
       try {
-        await auth
-            .signInWithEmailAndPassword(email: mail, password: password)
-            .then((value) {
-          Navigator.push(context, _createRoute());
+        await FirebaseAuth.instance
+            .signInWithEmailAndPassword(
+          email: mail,
+          password: password,
+        )
+            .onError((error, stackTrace) {
+          showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  content: Text("${(error as dynamic).message}"),
+                );
+              });
+          return Future.delayed(Duration(milliseconds: 1));
+        }).then((value) {
+          Navigator.pushReplacement(context, _createRoute());
         });
-      } on FirebaseAuthException catch (e) {
+      } on FirebaseAuthException catch (err) {
         showDialog(
             context: context,
             builder: (context) {
               return AlertDialog(
-                content: Text("${(e as dynamic).message}"),
+                content: Text("${(err as dynamic).message}"),
               );
             });
       }
-      return true;
     } else {
       showDialog(
           context: context,
@@ -163,7 +223,8 @@ class LoginActions {
                               ref.child("users").set(<String, dynamic>{
                                 "$id": {"Accountcreatedon": "${Today}"}
                               });
-                              Navigator.push(context, _createRoute());
+                              Navigator.pushReplacement(
+                                  context, _createRoute());
                             });
                           } on FirebaseAuthException catch (e) {
                             showDialog(

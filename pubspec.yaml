@@ -39,8 +39,10 @@ dependencies:
   firebase_core:
   firebase_database: 
   firebase_auth: 
-dependency_overrides:
-  firebase_core_platform_interface: 4.5.1
+  rename: ^2.1.1
+  
+# dependency_overrides:
+#   firebase_core_platform_interface: 4.5.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
